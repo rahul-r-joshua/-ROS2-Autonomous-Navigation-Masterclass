@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================================================================== -->
+  <!-- ros2_control System Interface for 4-Wheel Differential Drive Robot    -->
+  <!-- ==================================================================== -->
+  <xacro:arg name="is_ignition" default="false"/>
+
+  <ros2_control name="MobileRobotHardwareSystem" type="system">
+    <hardware>
+      <xacro:if value="$(arg is_ignition)">
+        <plugin>ign_ros2_control/IgnitionSystem</plugin>
+      </xacro:if>
+      <xacro:unless value="$(arg is_ignition)">
+        <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+      </xacro:unless>
+    </hardware>
+
+    <!-- Front Left Wheel Joint -->
+    <joint name="front_left_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-10.0</param>
+        <param name="max">10.0</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <!-- Front Right Wheel Joint -->
+    <joint name="front_right_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-10.0</param>
+        <param name="max">10.0</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <!-- Rear Left Wheel Joint -->
+    <joint name="rear_left_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-10.0</param>
+        <param name="max">10.0</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <!-- Rear Right Wheel Joint -->
+    <joint name="rear_right_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-10.0</param>
+        <param name="max">10.0</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+
+</robot>

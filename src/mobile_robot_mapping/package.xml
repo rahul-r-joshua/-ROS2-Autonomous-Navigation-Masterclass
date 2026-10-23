@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>mobile_robot_mapping</name>
+  <version>1.0.0</version>
+  <description>2D Occupancy Grid Mapping Package using SLAM Toolbox for Mobile Robot</description>
+  <maintainer email="rahul.r.joshua123@gmail.com">Rahul Ramasamy</maintainer>
+  <author email="rahul.r.joshua123@gmail.com">Rahul Ramasamy</author>
+  <license>Apache-2.0</license>
+
+  <url type="website">https://rahul-r-joshua.github.io/portfolio/</url>
+  <url type="repository">https://github.com/rahul-r-joshua</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>slam_toolbox</exec_depend>
+  <exec_depend>nav2_map_server</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

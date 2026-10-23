@@ -1,0 +1,7 @@
+# Request: Target reference frame ('odom' or 'map')
+string target_frame
+---
+# Response: Robot pose and heading orientation
+geometry_msgs/PoseStamped pose
+float32 heading_yaw
+bool success

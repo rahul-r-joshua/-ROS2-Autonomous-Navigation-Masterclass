@@ -1,0 +1,309 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================================================================== -->
+  <!-- 1. Gazebo Colors and Surface Friction Properties                     -->
+  <!-- ==================================================================== -->
+  <gazebo reference="base_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <gazebo reference="lidar_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+  <gazebo reference="camera_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+
+  <!-- Wheel Friction Properties -->
+  <xacro:macro name="wheel_gazebo" params="prefix">
+    <gazebo reference="${prefix}_wheel_link">
+      <material>Gazebo/DarkGrey</material>
+      <mu1>0.8</mu1>
+      <mu2>0.1</mu2>
+      <fdir1>1 0 0</fdir1>
+      <kp>100000.0</kp>
+      <kd>1.0</kd>
+      <minDepth>0.001</minDepth>
+      <maxVel>0.5</maxVel>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:wheel_gazebo prefix="front_left"/>
+  <xacro:wheel_gazebo prefix="front_right"/>
+  <xacro:wheel_gazebo prefix="rear_left"/>
+  <xacro:wheel_gazebo prefix="rear_right"/>
+
+  <!-- ==================================================================== -->
+  <!-- 2. Simulation Plugins (Gazebo Classic vs Ignition / Modern Gazebo)   -->
+  <!-- ==================================================================== -->
+  <xacro:arg name="is_ignition" default="false"/>
+  <xacro:arg name="use_ros2_control" default="false"/>
+
+  <!-- ==================================================================== -->
+  <!-- 2A. GAZEBO CLASSIC (Gazebo 11) PLUGINS (Only when NOT Ignition)      -->
+  <!-- ==================================================================== -->
+  <xacro:unless value="$(arg is_ignition)">
+
+    <xacro:if value="$(arg use_ros2_control)">
+      <!-- Option B - ros2_control System Plugin (Default for production and bringup) -->
+      <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+          <parameters>$(find mobile_robot_controller)/config/ros2_robot_controller_params.yaml</parameters>
+          <ros>
+            <remapping>/diff_drive_controller/cmd_vel_unstamped:=/cmd_vel</remapping>
+            <remapping>/diff_drive_controller/odom:=/odom</remapping>
+          </ros>
+        </plugin>
+      </gazebo>
+    </xacro:if>
+
+    <xacro:unless value="$(arg use_ros2_control)">
+      <!-- Option A - Gazebo Classic Plugins (For Custom C++ and Python Kinematics Nodes) -->
+      <gazebo>
+        <plugin name="four_wheel_diff_drive" filename="libgazebo_ros_diff_drive.so">
+          <ros>
+            <namespace>/</namespace>
+            <remapping>/cmd_vel:=/cmd_vel</remapping>
+            <remapping>/odom:=/odom</remapping>
+          </ros>
+
+          <update_rate>50.0</update_rate>
+
+          <!-- 2 Wheel Pairs for 4-wheel robot -->
+          <num_wheel_pairs>2</num_wheel_pairs>
+
+          <!-- Left Wheels -->
+          <left_joint>front_left_wheel_joint</left_joint>
+          <left_joint>rear_left_wheel_joint</left_joint>
+
+          <!-- Right Wheels -->
+          <right_joint>front_right_wheel_joint</right_joint>
+          <right_joint>rear_right_wheel_joint</right_joint>
+
+          <!-- Kinematics (Calibrated for 4WD skid-steer wheel scrub) -->
+          <wheel_separation>0.457</wheel_separation>
+          <wheel_diameter>0.10</wheel_diameter>
+
+          <!-- Limits -->
+          <max_wheel_torque>20.0</max_wheel_torque>
+          <max_wheel_acceleration>2.0</max_wheel_acceleration>
+
+          <!-- Output / Odometry (Handled by Gazebo diff drive plugin) -->
+          <publish_odom>true</publish_odom>
+          <publish_odom_tf>true</publish_odom_tf>
+          <publish_wheel_tf>false</publish_wheel_tf>
+
+          <odometry_frame>odom</odometry_frame>
+          <robot_base_frame>base_footprint</robot_base_frame>
+        </plugin>
+      </gazebo>
+
+      <!-- Gazebo Joint State Publisher (Publishes /joint_states for wheels in Option A) -->
+      <gazebo>
+        <plugin name="four_wheel_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+          <ros>
+            <namespace>/</namespace>
+            <remapping>~/out:=/joint_states</remapping>
+          </ros>
+          <update_rate>50.0</update_rate>
+          <joint_name>front_left_wheel_joint</joint_name>
+          <joint_name>front_right_wheel_joint</joint_name>
+          <joint_name>rear_left_wheel_joint</joint_name>
+          <joint_name>rear_right_wheel_joint</joint_name>
+        </plugin>
+      </gazebo>
+    </xacro:unless>
+
+    <!-- Gazebo Classic 2D LiDAR Ray Sensor Plugin -->
+    <gazebo reference="lidar_link">
+      <sensor name="lidar_sensor" type="ray">
+        <pose>0 0 0.044 0 0 0</pose>
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+        <update_rate>10.0</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.15</min>
+            <max>12.0</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+        <plugin name="lidar_controller" filename="libgazebo_ros_ray_sensor.so">
+          <ros>
+            <remapping>~/out:=/scan</remapping>
+          </ros>
+          <output_type>sensor_msgs/LaserScan</output_type>
+          <frame_name>lidar_link</frame_name>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <!-- Gazebo Classic Front Camera Sensor Plugin -->
+    <gazebo reference="camera_link">
+      <sensor name="front_camera" type="camera">
+        <pose>0.021 0 0 0 0 0</pose>
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+        <update_rate>30.0</update_rate>
+        <camera>
+          <horizontal_fov>1.089</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>12.0</far>
+          </clip>
+        </camera>
+        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+          <ros>
+            <namespace>/</namespace>
+            <remapping>~/image_raw:=/camera/image_raw</remapping>
+            <remapping>~/camera_info:=/camera/camera_info</remapping>
+          </ros>
+          <camera_name>camera</camera_name>
+          <frame_name>camera_optical_link</frame_name>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <!-- Gazebo Classic IMU Sensor Plugin -->
+    <gazebo reference="imu_link">
+      <material>Gazebo/Green</material>
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <visualize>false</visualize>
+        <topic>/imu/data</topic>
+        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+          <ros>
+            <namespace>/</namespace>
+            <remapping>~/out:=/imu/data</remapping>
+          </ros>
+          <initial_orientation_as_reference>false</initial_orientation_as_reference>
+          <frame_name>imu_link</frame_name>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+  </xacro:unless>
+
+  <!-- ==================================================================== -->
+  <!-- 2B. IGNITION GAZEBO (ign) & MODERN GAZEBO (gz) SYSTEMS & PLUGINS     -->
+  <!-- ==================================================================== -->
+  <xacro:if value="$(arg is_ignition)">
+    <gazebo>
+      <xacro:if value="$(arg use_ros2_control)">
+        <!-- Option B - ros2_control System Plugin for Ignition / Modern Gazebo -->
+        <plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+          <parameters>$(find mobile_robot_controller)/config/ros2_robot_controller_params.yaml</parameters>
+          <ros>
+            <remapping>/diff_drive_controller/cmd_vel_unstamped:=/cmd_vel</remapping>
+            <remapping>/diff_drive_controller/odom:=/odom</remapping>
+          </ros>
+        </plugin>
+      </xacro:if>
+
+      <xacro:unless value="$(arg use_ros2_control)">
+        <!-- Option A - Diff Drive System for Ignition / Modern Gazebo (Calibrated for Ignition/Gz DART physics) -->
+        <plugin filename="libignition-gazebo-diff-drive-system.so" name="ignition::gazebo::systems::DiffDrive">
+          <left_joint>front_left_wheel_joint</left_joint>
+          <left_joint>rear_left_wheel_joint</left_joint>
+          <right_joint>front_right_wheel_joint</right_joint>
+          <right_joint>rear_right_wheel_joint</right_joint>
+          <wheel_separation>0.380</wheel_separation>
+          <wheel_radius>0.05</wheel_radius>
+          <topic>/cmd_vel</topic>
+          <odom_topic>/odom</odom_topic>
+          <tf_topic>/tf</tf_topic>
+          <frame_id>odom</frame_id>
+          <child_frame_id>base_footprint</child_frame_id>
+          <odom_publish_frequency>50</odom_publish_frequency>
+        </plugin>
+
+        <!-- Joint State Publisher for Ignition / Modern Gazebo (Only when NOT using ros2_control) -->
+        <plugin filename="libignition-gazebo-joint-state-publisher-system.so" name="ignition::gazebo::systems::JointStatePublisher">
+          <topic>/joint_states</topic>
+          <update_rate>50.0</update_rate>
+          <joint_name>front_left_wheel_joint</joint_name>
+          <joint_name>front_right_wheel_joint</joint_name>
+          <joint_name>rear_left_wheel_joint</joint_name>
+          <joint_name>rear_right_wheel_joint</joint_name>
+        </plugin>
+      </xacro:unless>
+    </gazebo>
+
+    <!-- Ignition / Modern Gz Sensors -->
+    <gazebo reference="imu_link">
+      <sensor name="imu_sensor" type="imu">
+        <always_on>1</always_on>
+        <update_rate>50.0</update_rate>
+        <visualize>false</visualize>
+        <topic>/imu/data</topic>
+        <gz_frame_id>imu_link</gz_frame_id>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="lidar_link">
+      <sensor name="lidar_sensor_ign" type="gpu_lidar">
+        <pose>0 0 0.044 0 0 0</pose>
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+        <update_rate>10.0</update_rate>
+        <topic>/scan</topic>
+        <gz_frame_id>lidar_link</gz_frame_id>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.15</min>
+            <max>12.0</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="camera_link">
+      <sensor name="front_camera_ign" type="camera">
+        <pose>0.021 0 0 0 0 0</pose>
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+        <update_rate>30.0</update_rate>
+        <topic>/camera/image_raw</topic>
+        <gz_frame_id>camera_optical_link</gz_frame_id>
+        <camera>
+          <horizontal_fov>1.089</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>12.0</far>
+          </clip>
+        </camera>
+      </sensor>
+    </gazebo>
+  </xacro:if>
+
+</robot>

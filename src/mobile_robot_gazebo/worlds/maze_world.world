@@ -1,0 +1,140 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="maze_world">
+    <!-- Ignition / Modern Gazebo World Plugins -->
+    <plugin filename="ignition-gazebo-physics-system" name="ignition::gazebo::systems::Physics"/>
+    <plugin filename="ignition-gazebo-user-commands-system" name="ignition::gazebo::systems::UserCommands"/>
+    <plugin filename="ignition-gazebo-scene-broadcaster-system" name="ignition::gazebo::systems::SceneBroadcaster"/>
+    <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu"/>
+
+    <!-- Directional Sun Light -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ground Plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Outer Perimeter Boundary Walls (12m x 12m) -->
+    <model name="wall_north">
+      <static>true</static>
+      <pose>0 6 1 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>12.4 0.4 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>12.4 0.4 2.0</size></box></geometry><material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="wall_south">
+      <static>true</static>
+      <pose>0 -6 1 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>12.4 0.4 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>12.4 0.4 2.0</size></box></geometry><material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="wall_east">
+      <static>true</static>
+      <pose>6 0 1 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.4 12.0 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.4 12.0 2.0</size></box></geometry><material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="wall_west">
+      <static>true</static>
+      <pose>-6 0 1 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.4 12.0 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.4 12.0 2.0</size></box></geometry><material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Interior Solvable Labyrinth Partitions (Zero Obstacles at (0,0) Spawn) -->
+    <!-- North Horizontal Wall (leaves east corridor open) -->
+    <model name="maze_wall_north">
+      <static>true</static>
+      <pose>-1.5 3.5 1 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>7.0 0.3 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>7.0 0.3 2.0</size></box></geometry><material><ambient>0.2 0.4 0.7 1</ambient><diffuse>0.2 0.5 0.8 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- South Horizontal Wall (leaves west corridor open) -->
+    <model name="maze_wall_south">
+      <static>true</static>
+      <pose>1.5 -3.5 1 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>7.0 0.3 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>7.0 0.3 2.0</size></box></geometry><material><ambient>0.2 0.4 0.7 1</ambient><diffuse>0.2 0.5 0.8 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- West Vertical Wall (leaves north & south bypass channels) -->
+    <model name="maze_wall_west">
+      <static>true</static>
+      <pose>-3.5 -0.5 1 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.3 4.0 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.3 4.0 2.0</size></box></geometry><material><ambient>0.2 0.4 0.7 1</ambient><diffuse>0.2 0.5 0.8 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- East Vertical Wall (leaves north & south bypass channels) -->
+    <model name="maze_wall_east">
+      <static>true</static>
+      <pose>3.5 0.5 1 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.3 4.0 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.3 4.0 2.0</size></box></geometry><material><ambient>0.2 0.4 0.7 1</ambient><diffuse>0.2 0.5 0.8 1</diffuse></material></visual>
+      </link>
+    </model>
+  </world>
+</sdf>

@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="100%" height="100%" style="background-color: #0d1117; border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Background Grid -->
+    <pattern id="sim_grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1c2128" stroke-width="1"/>
+    </pattern>
+
+    <!-- Radar Sweep Gradient -->
+    <linearGradient id="sweep_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Glowing Path Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Animations -->
+    <style>
+      @keyframes pulseRedZone {
+        0% { r: 52px; opacity: 0.25; }
+        50% { r: 58px; opacity: 0.55; }
+        100% { r: 52px; opacity: 0.25; }
+      }
+      @keyframes pulseYellowZone {
+        0% { r: 105px; opacity: 0.15; }
+        50% { r: 115px; opacity: 0.35; }
+        100% { r: 105px; opacity: 0.15; }
+      }
+      @keyframes radarRotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes pathFlow {
+        from { stroke-dashoffset: 40; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+    <!-- Arena Clip -->
+    <clipPath id="arena_clip">
+      <rect x="40" y="65" width="760" height="585" rx="8"/>
+    </clipPath>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="680" fill="#0d1117"/>
+  <rect width="1200" height="680" fill="url(#sim_grid)"/>
+
+  <!-- Top Visualizer Bar -->
+  <rect x="0" y="0" width="1200" height="46" fill="#161b22"/>
+  <!-- Sleek ROS 2 Badge Pill -->
+  <rect x="15" y="9" width="75" height="28" rx="14" fill="#1f6feb" stroke="#58a6ff" stroke-width="1"/>
+  <text x="52" y="27" fill="#ffffff" font-size="13px" font-weight="900" text-anchor="middle" letter-spacing="1px">ROS 2</text>
+  <text x="100" y="28" fill="#f0f6fc" font-size="15px" font-weight="800">Humble • Nav2 Autonomous Navigation &amp; Active LiDAR Safety Zones Visualizer</text>
+  
+  <!-- Status Badge Pill (Perfect Subpixel Center: Dot + Text) -->
+  <rect x="980" y="9" width="205" height="28" rx="14" fill="#238636" stroke="#3fb950" stroke-width="1"/>
+  <circle cx="1014" cy="23" r="4.5" fill="#ffffff"/>
+  <text x="1090" y="24" fill="#ffffff" font-size="12px" font-weight="900" text-anchor="middle" dominant-baseline="central" letter-spacing="0.5px">100% OPERATIONAL</text>
+
+  <!-- ========================================================================= -->
+  <!-- 2D ENVIRONMENT & COSTMAP MAP (MAZE CORRIDORS)                             -->
+  <!-- ========================================================================= -->
+  <!-- Outer Boundary Walls -->
+  <rect x="40" y="65" width="760" height="585" rx="8" fill="#090d13" stroke="#30363d" stroke-width="3"/>
+
+  <!-- Simulation Content Clipped to Arena Bounds -->
+  <g clip-path="url(#arena_clip)">
+
+  <!-- Costmap Inflation Zones around walls (Soft Orange Glow, Wall 2 lowered to 170 for massive top clearance) -->
+  <path d="M 160 160 H 340 V 320 H 220" fill="none" stroke="#d29922" stroke-width="34" stroke-opacity="0.12" stroke-linecap="round"/>
+  <path d="M 460 170 V 360 H 620" fill="none" stroke="#d29922" stroke-width="34" stroke-opacity="0.12" stroke-linecap="round"/>
+  <path d="M 180 440 H 420 V 540" fill="none" stroke="#d29922" stroke-width="34" stroke-opacity="0.12" stroke-linecap="round"/>
+  <path d="M 520 440 H 600" fill="none" stroke="#d29922" stroke-width="34" stroke-opacity="0.12" stroke-linecap="round"/>
+
+  <!-- Obstacle Walls (Solid Dark Slate) -->
+  <path d="M 160 160 H 340 V 320 H 220" fill="none" stroke="#484f58" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 460 170 V 360 H 620" fill="none" stroke="#484f58" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 180 440 H 420 V 540" fill="none" stroke="#484f58" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 520 440 H 600" fill="none" stroke="#484f58" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Global A* Planned Trajectory (Glowing Emerald Green - Clear of All Walls) -->
+  <path d="M 100.0 120.0 L 100.3 127.1 L 100.6 134.3 L 100.8 141.4 L 101.0 148.5 L 101.1 155.7 L 101.2 162.8 L 101.2 169.9 L 101.2 177.1 L 101.1 184.2 L 101.0 191.4 L 100.8 198.5 L 100.6 205.7 L 100.3 212.9 L 100.0 220.0 L 99.6 227.2 L 99.2 234.3 L 98.7 241.5 L 98.2 248.7 L 97.7 255.9 L 97.0 263.0 L 96.5 270.2 L 96.3 277.4 L 96.4 284.5 L 96.9 291.6 L 97.8 298.7 L 99.1 305.8 L 100.7 312.9 L 102.7 319.9 L 105.1 326.9 L 107.8 333.9 L 110.9 340.9 L 114.4 347.5 L 118.4 353.5 L 123.0 358.8 L 128.0 363.5 L 133.6 367.5 L 139.6 370.8 L 146.2 373.4 L 153.3 375.4 L 160.6 377.0 L 167.9 378.3 L 175.1 379.4 L 182.4 380.3 L 189.6 380.9 L 196.8 381.3 L 204.0 381.4 L 211.1 381.4 L 218.2 381.1 L 225.3 380.7 L 232.5 380.3 L 239.6 380.1 L 246.7 380.0 L 253.8 379.9 L 260.9 380.0 L 268.1 380.2 L 275.2 380.5 L 282.3 380.9 L 289.5 381.4 L 296.6 382.0 L 303.8 382.8 L 310.9 383.4 L 318.1 383.7 L 325.2 383.5 L 332.4 383.0 L 339.5 382.1 L 346.7 380.8 L 353.8 379.0 L 361.0 376.9 L 368.1 374.4 L 375.2 371.5 L 381.5 367.9 L 386.8 363.6 L 391.1 358.6 L 394.4 352.8 L 396.7 346.4 L 398.1 339.3 L 398.7 331.6 L 399.2 324.0 L 399.7 316.5 L 400.1 309.0 L 400.4 301.6 L 400.7 294.3 L 400.9 287.0 L 401.1 279.8 L 401.2 272.7 L 401.2 265.6 L 401.2 258.6 L 401.2 251.6 L 401.0 244.6 L 400.8 237.5 L 400.5 230.4 L 400.2 223.3 L 399.8 216.2 L 399.3 209.0 L 398.7 201.8 L 398.1 194.6 L 397.4 187.4 L 397.2 180.3 L 397.6 173.1 L 398.6 166.1 L 400.3 159.0 L 402.5 152.0 L 405.4 145.1 L 408.9 138.3 L 413.1 132.4 L 417.9 127.5 L 423.6 123.8 L 429.9 121.2 L 436.9 119.7 L 444.4 119.1 L 451.9 118.5 L 459.3 118.0 L 466.7 117.7 L 474.0 117.4 L 481.3 117.3 L 488.5 117.2 L 495.7 117.2 L 502.8 117.4 L 509.9 117.6 L 516.9 117.7 L 524.0 117.9 L 531.0 118.0 L 538.1 118.0 L 545.1 118.0 L 552.2 118.0 L 559.2 117.9 L 566.3 117.8 L 573.3 117.6 L 580.4 117.4 L 587.4 117.2 L 594.4 116.9 L 601.5 116.7 L 608.6 116.6 L 615.8 116.7 L 623.1 116.9 L 630.4 117.3 L 637.9 117.8 L 645.4 118.5 L 652.9 119.3 L 660.5 120.3 L 668.1 121.5 L 675.0 123.6 L 680.9 126.8 L 685.9 130.9 L 690.0 136.0 L 693.2 142.2 L 695.5 149.4 L 697.3 156.8 L 698.9 164.2 L 700.3 171.6 L 701.4 178.9 L 702.2 186.2 L 702.9 193.5 L 703.3 200.7 L 703.4 207.8 L 703.3 215.0 L 702.9 222.1 L 702.4 229.1 L 701.9 236.2 L 701.4 243.2 L 701.0 250.3 L 700.7 257.4 L 700.4 264.5 L 700.2 271.6 L 700.0 278.7 L 699.9 285.8 L 699.9 292.9 L 699.9 300.1 L 700.0 307.2 L 700.2 314.4 L 700.4 321.5 L 700.6 328.7 L 700.9 335.9 L 701.1 343.0 L 701.1 350.2 L 701.0 357.3 L 700.8 364.5 L 700.5 371.6 L 700.1 378.7 L 699.5 385.8 L 698.9 393.0 L 698.1 400.1 L 697.2 407.2 L 696.1 414.2 L 694.8 421.3 L 693.3 428.3 L 691.4 435.2 L 689.3 442.1 L 687.0 449.0 L 684.3 455.8 L 681.4 462.5 L 678.0 468.9 L 674.2 474.8 L 669.8 480.2 L 664.9 485.2 L 659.4 489.6 L 653.5 493.6 L 647.0 497.0 L 640.0 500.0" fill="none" stroke="#2ea043" stroke-width="10" stroke-opacity="0.25" filter="url(#glow)"/>
+  <path d="M 100.0 120.0 L 100.3 127.1 L 100.6 134.3 L 100.8 141.4 L 101.0 148.5 L 101.1 155.7 L 101.2 162.8 L 101.2 169.9 L 101.2 177.1 L 101.1 184.2 L 101.0 191.4 L 100.8 198.5 L 100.6 205.7 L 100.3 212.9 L 100.0 220.0 L 99.6 227.2 L 99.2 234.3 L 98.7 241.5 L 98.2 248.7 L 97.7 255.9 L 97.0 263.0 L 96.5 270.2 L 96.3 277.4 L 96.4 284.5 L 96.9 291.6 L 97.8 298.7 L 99.1 305.8 L 100.7 312.9 L 102.7 319.9 L 105.1 326.9 L 107.8 333.9 L 110.9 340.9 L 114.4 347.5 L 118.4 353.5 L 123.0 358.8 L 128.0 363.5 L 133.6 367.5 L 139.6 370.8 L 146.2 373.4 L 153.3 375.4 L 160.6 377.0 L 167.9 378.3 L 175.1 379.4 L 182.4 380.3 L 189.6 380.9 L 196.8 381.3 L 204.0 381.4 L 211.1 381.4 L 218.2 381.1 L 225.3 380.7 L 232.5 380.3 L 239.6 380.1 L 246.7 380.0 L 253.8 379.9 L 260.9 380.0 L 268.1 380.2 L 275.2 380.5 L 282.3 380.9 L 289.5 381.4 L 296.6 382.0 L 303.8 382.8 L 310.9 383.4 L 318.1 383.7 L 325.2 383.5 L 332.4 383.0 L 339.5 382.1 L 346.7 380.8 L 353.8 379.0 L 361.0 376.9 L 368.1 374.4 L 375.2 371.5 L 381.5 367.9 L 386.8 363.6 L 391.1 358.6 L 394.4 352.8 L 396.7 346.4 L 398.1 339.3 L 398.7 331.6 L 399.2 324.0 L 399.7 316.5 L 400.1 309.0 L 400.4 301.6 L 400.7 294.3 L 400.9 287.0 L 401.1 279.8 L 401.2 272.7 L 401.2 265.6 L 401.2 258.6 L 401.2 251.6 L 401.0 244.6 L 400.8 237.5 L 400.5 230.4 L 400.2 223.3 L 399.8 216.2 L 399.3 209.0 L 398.7 201.8 L 398.1 194.6 L 397.4 187.4 L 397.2 180.3 L 397.6 173.1 L 398.6 166.1 L 400.3 159.0 L 402.5 152.0 L 405.4 145.1 L 408.9 138.3 L 413.1 132.4 L 417.9 127.5 L 423.6 123.8 L 429.9 121.2 L 436.9 119.7 L 444.4 119.1 L 451.9 118.5 L 459.3 118.0 L 466.7 117.7 L 474.0 117.4 L 481.3 117.3 L 488.5 117.2 L 495.7 117.2 L 502.8 117.4 L 509.9 117.6 L 516.9 117.7 L 524.0 117.9 L 531.0 118.0 L 538.1 118.0 L 545.1 118.0 L 552.2 118.0 L 559.2 117.9 L 566.3 117.8 L 573.3 117.6 L 580.4 117.4 L 587.4 117.2 L 594.4 116.9 L 601.5 116.7 L 608.6 116.6 L 615.8 116.7 L 623.1 116.9 L 630.4 117.3 L 637.9 117.8 L 645.4 118.5 L 652.9 119.3 L 660.5 120.3 L 668.1 121.5 L 675.0 123.6 L 680.9 126.8 L 685.9 130.9 L 690.0 136.0 L 693.2 142.2 L 695.5 149.4 L 697.3 156.8 L 698.9 164.2 L 700.3 171.6 L 701.4 178.9 L 702.2 186.2 L 702.9 193.5 L 703.3 200.7 L 703.4 207.8 L 703.3 215.0 L 702.9 222.1 L 702.4 229.1 L 701.9 236.2 L 701.4 243.2 L 701.0 250.3 L 700.7 257.4 L 700.4 264.5 L 700.2 271.6 L 700.0 278.7 L 699.9 285.8 L 699.9 292.9 L 699.9 300.1 L 700.0 307.2 L 700.2 314.4 L 700.4 321.5 L 700.6 328.7 L 700.9 335.9 L 701.1 343.0 L 701.1 350.2 L 701.0 357.3 L 700.8 364.5 L 700.5 371.6 L 700.1 378.7 L 699.5 385.8 L 698.9 393.0 L 698.1 400.1 L 697.2 407.2 L 696.1 414.2 L 694.8 421.3 L 693.3 428.3 L 691.4 435.2 L 689.3 442.1 L 687.0 449.0 L 684.3 455.8 L 681.4 462.5 L 678.0 468.9 L 674.2 474.8 L 669.8 480.2 L 664.9 485.2 L 659.4 489.6 L 653.5 493.6 L 647.0 497.0 L 640.0 500.0" fill="none" stroke="#3fb950" stroke-width="4" stroke-dasharray="8,6" style="animation: pathFlow 1s linear infinite;"/>
+
+  <!-- Waypoint Markers (Exactly Centered On The Green Path Line) -->
+  <g transform="translate(100.0, 120.0)">
+    <circle r="8" fill="#58a6ff"/>
+    <text x="14" y="5" fill="#58a6ff" font-size="12px" font-weight="900">START (0.0, 0.0)</text>
+  </g>
+  <g transform="translate(260.0, 380.0)">
+    <circle r="6" fill="#d29922"/>
+    <text x="12" y="4" fill="#d29922" font-size="11px" font-weight="700">W1</text>
+  </g>
+  <g transform="translate(400.0, 220.0)">
+    <circle r="6" fill="#d29922"/>
+    <text x="12" y="4" fill="#d29922" font-size="11px" font-weight="700">W2</text>
+  </g>
+  <g transform="translate(640.0, 500.0)">
+    <circle r="10" fill="#f85149"/>
+    <circle r="16" fill="none" stroke="#f85149" stroke-width="2" stroke-dasharray="4,3"/>
+    <text x="0" y="30" fill="#f85149" font-size="13px" font-weight="900" text-anchor="middle">GOAL (Target Pose)</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- MOBILE ROBOT CHASSIS AT CURRENT POSITION (360, 380)                       -->
+  <!-- ========================================================================= -->
+  <g transform="translate(360, 380)">
+    <!-- Yellow Slowdown Safety Zone (r = 105px) -->
+    <circle r="105" fill="#d29922" fill-opacity="0.14" stroke="#d29922" stroke-width="2" stroke-dasharray="6,4" style="animation: pulseYellowZone 2.5s ease-in-out infinite;"/>
+
+    <!-- Red Emergency Stop Safety Zone (r = 52px) -->
+    <circle r="52" fill="#f85149" fill-opacity="0.22" stroke="#f85149" stroke-width="2.5" style="animation: pulseRedZone 2s ease-in-out infinite;"/>
+
+    <!-- AMCL Particle Cloud Cluster (Cyan Dots) -->
+    <g opacity="0.8">
+      <circle cx="-12" cy="-8" r="1.8" fill="#58a6ff"/>
+      <circle cx="8" cy="-14" r="1.5" fill="#58a6ff"/>
+      <circle cx="-6" cy="12" r="2.0" fill="#79c0ff"/>
+      <circle cx="14" cy="9" r="1.6" fill="#58a6ff"/>
+      <circle cx="-18" cy="4" r="1.4" fill="#58a6ff"/>
+      <circle cx="16" cy="-6" r="1.7" fill="#79c0ff"/>
+      <circle cx="-2" cy="-16" r="1.9" fill="#58a6ff"/>
+      <circle cx="7" cy="18" r="1.5" fill="#58a6ff"/>
+    </g>
+
+    <!-- Rotating Radar Sweep Beam -->
+    <g style="transform-origin: 0px 0px; animation: radarRotate 4s linear infinite;">
+      <path d="M 0 0 L 100 0 A 100 100 0 0 1 70 70 Z" fill="url(#sweep_grad)"/>
+      <line x1="0" y1="0" x2="100" y2="0" stroke="#58a6ff" stroke-width="2" opacity="0.8"/>
+    </g>
+
+    <!-- Robot Base Chassis (0.40m x 0.30m Box) -->
+    <rect x="-30" y="-22" width="60" height="44" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="2.5"/>
+    <!-- Wheels -->
+    <rect x="-24" y="-27" width="16" height="6" rx="2" fill="#30363d"/>
+    <rect x="8" y="-27" width="16" height="6" rx="2" fill="#30363d"/>
+    <rect x="-24" y="21" width="16" height="6" rx="2" fill="#30363d"/>
+    <rect x="8" y="21" width="16" height="6" rx="2" fill="#30363d"/>
+    <!-- LiDAR Puck & Heading Indicator -->
+    <circle cx="0" cy="0" r="11" fill="#1f6feb" stroke="#ffffff" stroke-width="1.5"/>
+    <polygon points="12,0 0,-5 0,5" fill="#58a6ff"/>
+    <!-- Lookahead Vector to Pure Pursuit Target Point -->
+    <line x1="0" y1="0" x2="65" y2="0" stroke="#3fb950" stroke-width="2" stroke-dasharray="3,3"/>
+    <circle cx="65" cy="0" r="4" fill="#3fb950"/>
+  </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- RIGHT HUD & TELEMETRY DASHBOARD PANEL (WITH CRISP VECTOR ICONS)          -->
+  <!-- ========================================================================= -->
+  <g transform="translate(830, 65)">
+    <!-- Dashboard Outer Card -->
+    <rect width="330" height="585" rx="10" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+
+    <!-- Section 1: Navigation Status -->
+    <rect x="15" y="15" width="300" height="105" rx="8" fill="#0d1117" stroke="#388bfd" stroke-width="1.5"/>
+    <circle cx="34" cy="36" r="7" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+    <polygon points="34,31 32,36 36,36" fill="#f85149"/>
+    <text x="48" y="40" fill="#58a6ff" font-size="14px" font-weight="900">Nav2 Simple Commander</text>
+    <text x="30" y="65" fill="#f0f6fc" font-size="13px" font-weight="700">Lifecycle State: <tspan fill="#3fb950">ACTIVE</tspan></text>
+    <text x="30" y="88" fill="#c9d1d9" font-size="12px">BT Replanning Rate: <tspan fill="#58a6ff">1.0 Hz</tspan></text>
+    <text x="30" y="108" fill="#8b949e" font-size="12px">Active Node: <tspan fill="#bc8cff">FollowPath</tspan></text>
+
+    <!-- Section 2: Custom C++ Plugins -->
+    <rect x="15" y="135" width="300" height="115" rx="8" fill="#0d1117" stroke="#8957e5" stroke-width="1.5"/>
+    <rect x="28" y="150" width="12" height="12" rx="2" fill="#24143a" stroke="#bc8cff" stroke-width="1.5"/>
+    <circle cx="34" cy="156" r="2.5" fill="#bc8cff"/>
+    <text x="48" y="160" fill="#bc8cff" font-size="14px" font-weight="900">Custom C++ Plugins (M7/M8)</text>
+    <text x="30" y="185" fill="#c9d1d9" font-size="12px">Global Planner: <tspan fill="#58a6ff" font-weight="700">AStarPlanner</tspan></text>
+    <text x="30" y="208" fill="#c9d1d9" font-size="12px">Local Controller: <tspan fill="#3fb950" font-weight="700">PurePursuit</tspan></text>
+    <text x="30" y="232" fill="#8b949e" font-size="11px">Lookahead: <tspan fill="#ffffff">0.45m</tspan> • Curvature: <tspan fill="#ffffff">0.24 rad/m</tspan></text>
+
+    <!-- Section 3: Active LiDAR Safety Zones -->
+    <rect x="15" y="265" width="300" height="135" rx="8" fill="#0d1117" stroke="#f85149" stroke-width="1.5"/>
+    <path d="M 34 278 L 40 278 L 40 286 L 34 290 L 28 286 L 28 278 Z" fill="#f85149"/>
+    <text x="48" y="290" fill="#f85149" font-size="14px" font-weight="900">Active LiDAR Safety Zones</text>
+    <text x="30" y="315" fill="#c9d1d9" font-size="12px">Safety Status: <tspan fill="#3fb950" font-weight="700">● NOMINAL (Clear)</tspan></text>
+    <circle cx="35" cy="334" r="4.5" fill="#f85149"/>
+    <text x="46" y="338" fill="#ff7b72" font-size="12px">Stop Zone: <tspan fill="#ffffff">d ≤ 0.45m (E-Stop)</tspan></text>
+    <circle cx="35" cy="356" r="4.5" fill="#d29922"/>
+    <text x="46" y="360" fill="#d29922" font-size="12px">Slow Zone: <tspan fill="#ffffff">d ≤ 0.90m (50% Speed)</tspan></text>
+    <text x="30" y="385" fill="#8b949e" font-size="11px">Twist Mux: <tspan fill="#58a6ff">/cmd_vel_nav (P50)</tspan></text>
+
+    <!-- Section 4: Live Telemetry -->
+    <rect x="15" y="415" width="300" height="155" rx="8" fill="#0d1117" stroke="#238636" stroke-width="1.5"/>
+    <rect x="28" y="434" width="3" height="6" fill="#3fb950"/>
+    <rect x="33" y="430" width="3" height="10" fill="#3fb950"/>
+    <rect x="38" y="426" width="3" height="14" fill="#3fb950"/>
+    <text x="48" y="440" fill="#3fb950" font-size="14px" font-weight="900">Live Telemetry &amp; EKF Fusion</text>
+    <text x="30" y="465" fill="#c9d1d9" font-size="12px">Linear Speed v: <tspan fill="#58a6ff" font-weight="700">0.32 m/s</tspan></text>
+    <text x="30" y="488" fill="#c9d1d9" font-size="12px">Angular Speed ω: <tspan fill="#58a6ff" font-weight="700">0.08 rad/s</tspan></text>
+    <text x="30" y="511" fill="#c9d1d9" font-size="12px">Distance to Goal: <tspan fill="#d29922" font-weight="700">1.64 m</tspan></text>
+    <text x="30" y="534" fill="#c9d1d9" font-size="12px">AMCL Particles: <tspan fill="#3fb950">1,250 (Converged)</tspan></text>
+    <text x="30" y="556" fill="#8b949e" font-size="11px">Pose: x=2.15, y=1.40, yaw=42°</text>
+  </g>
+</svg>

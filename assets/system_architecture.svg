@@ -1,0 +1,510 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 2420" width="100%" height="100%" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" style="background-color: #0d1117; border-radius: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Background Blueprint Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#21262d" stroke-width="1.2"/>
+    </pattern>
+
+    <!-- Gradients -->
+    <linearGradient id="bg_grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#090d13"/>
+      <stop offset="50%" stop-color="#0f1520"/>
+      <stop offset="100%" stop-color="#090d13"/>
+    </linearGradient>
+
+    <!-- Layer Headers & Cards -->
+    <linearGradient id="l1_header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1f6feb"/>
+      <stop offset="100%" stop-color="#1158c7"/>
+    </linearGradient>
+    <linearGradient id="l1_card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#13233a"/>
+      <stop offset="100%" stop-color="#0b1626"/>
+    </linearGradient>
+
+    <linearGradient id="l2_header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8957e5"/>
+      <stop offset="100%" stop-color="#6e40c9"/>
+    </linearGradient>
+    <linearGradient id="l2_card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#221538"/>
+      <stop offset="100%" stop-color="#140b24"/>
+    </linearGradient>
+
+    <linearGradient id="l3_header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d29922"/>
+      <stop offset="100%" stop-color="#b0780c"/>
+    </linearGradient>
+    <linearGradient id="l3_card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a1e0b"/>
+      <stop offset="100%" stop-color="#160e03"/>
+    </linearGradient>
+
+    <linearGradient id="l4_header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#238636"/>
+      <stop offset="100%" stop-color="#196c2e"/>
+    </linearGradient>
+    <linearGradient id="l4_card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#102a1c"/>
+      <stop offset="100%" stop-color="#06170d"/>
+    </linearGradient>
+
+    <linearGradient id="l5_header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#30363d"/>
+      <stop offset="100%" stop-color="#21262d"/>
+    </linearGradient>
+    <linearGradient id="l5_card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#161b22"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+
+    <linearGradient id="ribbon_grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1f6feb"/>
+      <stop offset="35%" stop-color="#8957e5"/>
+      <stop offset="70%" stop-color="#d29922"/>
+      <stop offset="100%" stop-color="#238636"/>
+    </linearGradient>
+
+    <!-- Clip Paths for Pixel-Perfect Rounded Box Headers -->
+    <clipPath id="clip_l1"><rect x="50" y="180" width="1700" height="260" rx="14"/></clipPath>
+    <clipPath id="clip_l2"><rect x="50" y="520" width="1700" height="460" rx="14"/></clipPath>
+    <clipPath id="clip_l3"><rect x="50" y="1060" width="1700" height="300" rx="14"/></clipPath>
+    <clipPath id="clip_l4"><rect x="50" y="1440" width="1700" height="330" rx="14"/></clipPath>
+    <clipPath id="clip_l5"><rect x="50" y="1850" width="1700" height="320" rx="14"/></clipPath>
+
+    <!-- Marker Arrowheads -->
+    <marker id="arrow_blue" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 1 1 L 11 6 L 1 11 Z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow_purple" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 1 1 L 11 6 L 1 11 Z" fill="#bc8cff"/>
+    </marker>
+    <marker id="arrow_amber" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 1 1 L 11 6 L 1 11 Z" fill="#d29922"/>
+    </marker>
+    <marker id="arrow_green" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 1 1 L 11 6 L 1 11 Z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- Base Canvas -->
+  <rect width="1800" height="2420" fill="url(#bg_grad)"/>
+  <rect width="1800" height="2420" fill="url(#grid)"/>
+
+  <!-- Top Title Ribbon -->
+  <rect x="0" y="0" width="1800" height="60" fill="#161b22"/>
+  <rect x="0" y="56" width="1800" height="4" fill="url(#ribbon_grad)"/>
+
+  <!-- Sleek Top ROS 2 Badge Pill (Clean, proportional, zero overflow) -->
+  <rect x="40" y="14" width="95" height="32" rx="16" fill="#1f6feb" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="87" y="35" fill="#ffffff" font-size="15px" font-weight="900" text-anchor="middle" letter-spacing="1px">ROS 2</text>
+  <text x="150" y="36" fill="#f0f6fc" font-size="19px" font-weight="800">Humble • 4-Wheel Autonomous Mobile Robot Navigation Architecture &amp; Nav2 Stack</text>
+
+  <!-- 11 Milestones Status Pill -->
+  <rect x="1520" y="14" width="230" height="32" rx="16" fill="#238636" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="1635" y="35" fill="#ffffff" font-size="14px" font-weight="900" text-anchor="middle">● 11 MILESTONES VERIFIED</text>
+
+  <!-- Title Banner -->
+  <g transform="translate(0, 75)">
+    <text x="900" y="38" font-size="36px" font-weight="900" fill="#58a6ff" text-anchor="middle" letter-spacing="1.2px">END-TO-END AUTONOMOUS NAVIGATION &amp; NAV2 ARCHITECTURE</text>
+    <text x="900" y="72" font-size="20px" font-weight="700" fill="#8b949e" text-anchor="middle">Production Nav2 Behavior Tree Replanning • Custom C++ Plugins (A*, Dijkstra, Pure Pursuit, PD) • AMCL + 15-State EKF</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 1: AUTONOMOUS MISSION DISPATCH & IDL INTERFACES (M9 & M5)           -->
+  <!-- ========================================================================= -->
+  <g id="layer_1">
+    <!-- Outer Container Box with Perfect Clip Path -->
+    <rect x="50" y="180" width="1700" height="260" rx="14" fill="url(#l1_card)" stroke="#388bfd" stroke-width="2.5"/>
+    <rect x="50" y="180" width="1700" height="48" fill="url(#l1_header)" clip-path="url(#clip_l1)"/>
+    <text x="900" y="211" font-size="18px" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1px">LAYER 1: AUTONOMOUS MISSION DISPATCH &amp; IDL INTERFACES (M9 &amp; M5)</text>
+
+    <!-- Sub-Cards (4 Symmetrical: 395px each with 20px gaps) -->
+    <!-- Card 1.1: Waypoint Follower -->
+    <g transform="translate(80, 242)">
+      <rect width="395" height="180" rx="10" fill="#0d1117" stroke="#1f6feb" stroke-width="1.5"/>
+      <text x="197" y="32" font-size="19px" font-weight="900" fill="#58a6ff" text-anchor="middle">🎯 waypoint_follower.py</text>
+      <text x="197" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Nav2 Simple Commander API</text>
+      <text x="197" y="88" font-size="13px" fill="#c9d1d9" text-anchor="middle">Sequential Multi-Goal Waypoint Traversal</text>
+      <text x="197" y="112" font-size="13px" fill="#8b949e" text-anchor="middle">Dynamic Inspection Dwell at Targets</text>
+      <rect x="25" y="132" width="345" height="30" rx="6" fill="#161b22"/>
+      <text x="197" y="152" font-size="13px" font-family="monospace" font-weight="700" fill="#58a6ff" text-anchor="middle">/follow_waypoints (Action)</text>
+    </g>
+
+    <!-- Card 1.2: Nav to Pose -->
+    <g transform="translate(495, 242)">
+      <rect width="395" height="180" rx="10" fill="#0d1117" stroke="#1f6feb" stroke-width="1.5"/>
+      <text x="197" y="32" font-size="19px" font-weight="900" fill="#58a6ff" text-anchor="middle">📍 nav_to_pose.py</text>
+      <text x="197" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Precise Single-Target Dispatcher</text>
+      <text x="197" y="88" font-size="13px" fill="#c9d1d9" text-anchor="middle">Real-Time Distance &amp; ETA Telemetry</text>
+      <text x="197" y="112" font-size="13px" fill="#8b949e" text-anchor="middle">Strict Heading Yaw Angle Alignment</text>
+      <rect x="25" y="132" width="345" height="30" rx="6" fill="#161b22"/>
+      <text x="197" y="152" font-size="13px" font-family="monospace" font-weight="700" fill="#58a6ff" text-anchor="middle">/navigate_to_pose (Action)</text>
+    </g>
+
+    <!-- Card 1.3: Patrol Loop -->
+    <g transform="translate(910, 242)">
+      <rect width="395" height="180" rx="10" fill="#0d1117" stroke="#1f6feb" stroke-width="1.5"/>
+      <text x="197" y="32" font-size="19px" font-weight="900" fill="#58a6ff" text-anchor="middle">🔄 patrol_loop.py</text>
+      <text x="197" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Perimeter Security Surveillance</text>
+      <text x="197" y="88" font-size="13px" fill="#c9d1d9" text-anchor="middle">Continuous Multi-Lap Loop Traversal</text>
+      <text x="197" y="112" font-size="13px" fill="#8b949e" text-anchor="middle">Autonomous Dynamic Recovery on Block</text>
+      <rect x="25" y="132" width="345" height="30" rx="6" fill="#161b22"/>
+      <text x="197" y="152" font-size="13px" font-family="monospace" font-weight="700" fill="#58a6ff" text-anchor="middle">Infinite / N-Lap Patrol Loop</text>
+    </g>
+
+    <!-- Card 1.4: Custom IDLs -->
+    <g transform="translate(1325, 242)">
+      <rect width="395" height="180" rx="10" fill="#0d1117" stroke="#1f6feb" stroke-width="1.5"/>
+      <text x="197" y="32" font-size="19px" font-weight="900" fill="#58a6ff" text-anchor="middle">⚡ mobile_robot_msgs</text>
+      <text x="197" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Custom Action &amp; Service IDLs (M5)</text>
+      <text x="197" y="88" font-size="13px" fill="#c9d1d9" text-anchor="middle">NavigateWaypoint.action (Goal/Feed/Res)</text>
+      <text x="197" y="112" font-size="13px" fill="#8b949e" text-anchor="middle">SetSafetyZone.srv • GetRobotPose.srv</text>
+      <rect x="25" y="132" width="345" height="30" rx="6" fill="#161b22"/>
+      <text x="197" y="152" font-size="13px" font-family="monospace" font-weight="700" fill="#58a6ff" text-anchor="middle">ROS 2 IDL Compilers</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- CONNECTOR 1 -> 2: ACTION GOALS (CENTERED AT X = 900)                      -->
+  <!-- ========================================================================= -->
+  <g id="conn_1_to_2">
+    <line x1="900" y1="440" x2="900" y2="520" stroke="#58a6ff" stroke-width="3" marker-end="url(#arrow_blue)"/>
+    <rect x="690" y="460" width="420" height="40" rx="20" fill="#161b22" stroke="#388bfd" stroke-width="2"/>
+    <text x="900" y="485" font-size="14px" font-weight="800" fill="#58a6ff" text-anchor="middle" font-family="monospace">🎯 Action Goals &amp; Mission Dispatch</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 2: NAV2 AUTONOMOUS STACK & CUSTOM C++ PLUGINLIB ENGINES (M7, M8, M9) -->
+  <!-- ========================================================================= -->
+  <g id="layer_2">
+    <!-- Outer Container Box with Perfect Clip Path -->
+    <rect x="50" y="520" width="1700" height="460" rx="14" fill="url(#l2_card)" stroke="#8957e5" stroke-width="2.5"/>
+    <rect x="50" y="520" width="1700" height="48" fill="url(#l2_header)" clip-path="url(#clip_l2)"/>
+    <text x="900" y="551" font-size="18px" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1px">LAYER 2: NAV2 AUTONOMOUS STACK &amp; CUSTOM C++ PLUGINLIB ENGINES (M7, M8, M9)</text>
+
+    <!-- Sub-Cards (4 Symmetrical: 395px each with 20px gaps, height 375px) -->
+    <!-- Card 2.1: BT Navigator -->
+    <g transform="translate(80, 582)">
+      <rect width="395" height="375" rx="10" fill="#0d1117" stroke="#8957e5" stroke-width="1.5"/>
+      <text x="197" y="35" font-size="20px" font-weight="900" fill="#bc8cff" text-anchor="middle">🧭 BT Navigator</text>
+      <text x="197" y="62" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Dynamic Behavior Tree</text>
+      <rect x="20" y="80" width="355" height="272" rx="8" fill="#161b22"/>
+      <text x="35" y="110" font-size="14px" font-weight="700" fill="#58a6ff">● RateController (1.0 Hz Dynamic Replanning)</text>
+      <text x="50" y="138" font-size="13px" fill="#c9d1d9">↳ ComputePathToPose (Global Planning)</text>
+      <text x="50" y="165" font-size="13px" fill="#c9d1d9">↳ FollowPath (Local Trajectory Tracking)</text>
+      <text x="35" y="200" font-size="14px" font-weight="700" fill="#ff7b72">● Recovery Sequence Fallbacks</text>
+      <text x="50" y="225" font-size="13px" fill="#c9d1d9">↳ ClearEntireCostmap (Global Recovery)</text>
+      <text x="50" y="250" font-size="13px" fill="#c9d1d9">↳ SpinRecovery (1.57 rad In-Place Turn)</text>
+      <text x="50" y="275" font-size="13px" fill="#c9d1d9">↳ WaitRecovery (5.0 s Obstacle Clear)</text>
+      <text x="50" y="300" font-size="13px" fill="#c9d1d9">↳ BackUpRecovery (-0.30 m Auto-Reverse)</text>
+    </g>
+
+    <!-- Card 2.2: Planner Server -->
+    <g transform="translate(495, 582)">
+      <rect width="395" height="375" rx="10" fill="#0d1117" stroke="#8957e5" stroke-width="1.5"/>
+      <text x="197" y="35" font-size="20px" font-weight="900" fill="#bc8cff" text-anchor="middle">🧠 Planner Server</text>
+      <text x="197" y="62" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Custom C++ Global Planners (M7)</text>
+
+      <g transform="translate(20, 80)">
+        <rect width="355" height="124" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1"/>
+        <text x="177" y="28" font-size="15px" font-weight="900" fill="#58a6ff" text-anchor="middle">mobile_robot_planning::AStarPlanner</text>
+        <text x="177" y="55" font-size="13px" fill="#c9d1d9" text-anchor="middle">Euclidean Heuristic h(n) • Minimum Total Cost f(n)</text>
+        <text x="177" y="80" font-size="12px" fill="#8b949e" text-anchor="middle">8-Connected Grid Expansion • C++ Pluginlib Shared Lib</text>
+        <text x="177" y="104" font-size="12px" font-family="monospace" fill="#58a6ff" text-anchor="middle">Exported via global_planner_plugins.xml</text>
+      </g>
+
+      <g transform="translate(20, 224)">
+        <rect width="355" height="128" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1"/>
+        <text x="177" y="28" font-size="15px" font-weight="900" fill="#58a6ff" text-anchor="middle">mobile_robot_planning::DijkstraPlanner</text>
+        <text x="177" y="55" font-size="13px" fill="#c9d1d9" text-anchor="middle">Uniform Cumulative Path Cost • Optimal Shortest Path</text>
+        <text x="177" y="80" font-size="12px" fill="#8b949e" text-anchor="middle">Guaranteed Completeness • Zero Local Minima Trap</text>
+        <text x="177" y="104" font-size="12px" font-family="monospace" fill="#58a6ff" text-anchor="middle">nav2_core::GlobalPlanner Plugin Interface</text>
+      </g>
+    </g>
+
+    <!-- Card 2.3: Controller Server -->
+    <g transform="translate(910, 582)">
+      <rect width="395" height="375" rx="10" fill="#0d1117" stroke="#8957e5" stroke-width="1.5"/>
+      <text x="197" y="35" font-size="20px" font-weight="900" fill="#bc8cff" text-anchor="middle">🎮 Controller Server</text>
+      <text x="197" y="62" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Custom C++ Local Controllers (M8)</text>
+
+      <g transform="translate(20, 80)">
+        <rect width="355" height="124" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
+        <text x="177" y="28" font-size="15px" font-weight="900" fill="#3fb950" text-anchor="middle">mobile_robot_motion::PurePursuit</text>
+        <text x="177" y="55" font-size="13px" fill="#c9d1d9" text-anchor="middle">Geometric Arc Steering • Dynamic Lookahead L_d</text>
+        <text x="177" y="80" font-size="12px" fill="#8b949e" text-anchor="middle">Curvature κ = 2y/L_d² • Adaptive Speed Throttling</text>
+        <text x="177" y="104" font-size="12px" font-family="monospace" fill="#3fb950" text-anchor="middle">motion_controller_plugins.xml</text>
+      </g>
+
+      <g transform="translate(20, 224)">
+        <rect width="355" height="128" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
+        <text x="177" y="28" font-size="15px" font-weight="900" fill="#3fb950" text-anchor="middle">mobile_robot_motion::PDMotion</text>
+        <text x="177" y="55" font-size="13px" fill="#c9d1d9" text-anchor="middle">Proportional-Derivative Heading &amp; Lateral Control</text>
+        <text x="177" y="80" font-size="12px" fill="#8b949e" text-anchor="middle">Overdamped Response • Eliminates Overshoot Oscillation</text>
+        <text x="177" y="104" font-size="12px" font-family="monospace" fill="#3fb950" text-anchor="middle">nav2_core::Controller Plugin Interface</text>
+      </g>
+    </g>
+
+    <!-- Card 2.4: 2D Costmaps -->
+    <g transform="translate(1325, 582)">
+      <rect width="395" height="375" rx="10" fill="#0d1117" stroke="#8957e5" stroke-width="1.5"/>
+      <text x="197" y="35" font-size="20px" font-weight="900" fill="#bc8cff" text-anchor="middle">🗺️ Nav2 2D Costmaps</text>
+      <text x="197" y="62" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Multi-Layer Costmap Engine</text>
+
+      <g transform="translate(20, 80)">
+        <rect width="355" height="124" rx="8" fill="#161b22"/>
+        <text x="177" y="28" font-size="16px" font-weight="900" fill="#d29922" text-anchor="middle">Global Costmap (map frame)</text>
+        <text x="177" y="55" font-size="13px" fill="#c9d1d9" text-anchor="middle">Static Layer (nav2_map_server PGM)</text>
+        <text x="177" y="80" font-size="13px" fill="#c9d1d9" text-anchor="middle">Inflation Layer (Inflation Radius = 0.55m)</text>
+        <text x="177" y="104" font-size="12px" fill="#8b949e" text-anchor="middle">Decoupled Cost Decay Function</text>
+      </g>
+
+      <g transform="translate(20, 224)">
+        <rect width="355" height="128" rx="8" fill="#161b22"/>
+        <text x="177" y="28" font-size="16px" font-weight="900" fill="#d29922" text-anchor="middle">Local Costmap (odom frame)</text>
+        <text x="177" y="55" font-size="13px" fill="#c9d1d9" text-anchor="middle">Obstacle Layer (Real-Time LiDAR /scan)</text>
+        <text x="177" y="80" font-size="13px" fill="#c9d1d9" text-anchor="middle">Dynamic Rolling Window (3.0m × 3.0m)</text>
+        <text x="177" y="104" font-size="12px" fill="#8b949e" text-anchor="middle">High-Fidelity 0.05m Grid Resolution</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- CONNECTOR 2 -> 3: /cmd_vel_nav (CENTERED AT X = 900)                      -->
+  <!-- ========================================================================= -->
+  <g id="conn_2_to_3">
+    <!-- Continuous Arrow from Layer 2 to Layer 3 -->
+    <line x1="900" y1="980" x2="900" y2="1060" stroke="#bc8cff" stroke-width="3" marker-end="url(#arrow_purple)"/>
+    <!-- Generous Centered Pill Badge for /cmd_vel_nav (420px wide, no text clipping) -->
+    <rect x="690" y="1000" width="420" height="40" rx="20" fill="#161b22" stroke="#8957e5" stroke-width="2"/>
+    <text x="900" y="1025" font-size="14px" font-weight="800" fill="#bc8cff" text-anchor="middle" font-family="monospace">⚡ /cmd_vel_nav (Autonomous Velocity)</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 3: VELOCITY ARBITRATION & ACTIVE LIDAR SAFETY ZONES (M1, M2, M10)   -->
+  <!-- ========================================================================= -->
+  <g id="layer_3">
+    <!-- Outer Container Box with Perfect Clip Path -->
+    <rect x="50" y="1060" width="1700" height="300" rx="14" fill="url(#l3_card)" stroke="#d29922" stroke-width="2.5"/>
+    <rect x="50" y="1060" width="1700" height="48" fill="url(#l3_header)" clip-path="url(#clip_l3)"/>
+    <text x="900" y="1091" font-size="18px" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1px">LAYER 3: VELOCITY ARBITRATION &amp; ACTIVE LIDAR SAFETY ZONES (M1, M2, M10)</text>
+
+    <!-- 2 Symmetrical Large Cards (805px each with 30px gap) -->
+    <!-- Card 3.1: Twist Mux Arbitrator -->
+    <g transform="translate(80, 1122)">
+      <rect width="805" height="220" rx="10" fill="#0d1117" stroke="#d29922" stroke-width="1.5"/>
+      <text x="402" y="32" font-size="20px" font-weight="900" fill="#d29922" text-anchor="middle">🔀 twist_mux Priority Velocity Arbitrator</text>
+      <text x="402" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Deterministic Multiplexing with Strict Priority Hierarchy</text>
+
+      <g transform="translate(35, 75)">
+        <rect width="225" height="125" rx="8" fill="#161b22" stroke="#ff7b72" stroke-width="1.5"/>
+        <text x="112" y="28" font-size="16px" font-weight="900" fill="#ff7b72" text-anchor="middle">1. Joystick [P99]</text>
+        <text x="112" y="55" font-size="13px" font-family="monospace" fill="#58a6ff" text-anchor="middle">/cmd_vel_joy</text>
+        <text x="112" y="80" font-size="12px" fill="#c9d1d9" text-anchor="middle">Deadman Failsafe (LB)</text>
+        <text x="112" y="105" font-size="12px" font-weight="700" fill="#ff7b72" text-anchor="middle">Highest Manual Priority</text>
+      </g>
+
+      <g transform="translate(290, 75)">
+        <rect width="225" height="125" rx="8" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+        <text x="112" y="28" font-size="16px" font-weight="900" fill="#d29922" text-anchor="middle">2. Keyboard [P90]</text>
+        <text x="112" y="55" font-size="13px" font-family="monospace" fill="#58a6ff" text-anchor="middle">/cmd_vel_key</text>
+        <text x="112" y="80" font-size="12px" fill="#c9d1d9" text-anchor="middle">Interactive Teleoperation</text>
+        <text x="112" y="105" font-size="12px" font-weight="700" fill="#d29922" text-anchor="middle">Human Override Control</text>
+      </g>
+
+      <g transform="translate(545, 75)">
+        <rect width="225" height="125" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+        <text x="112" y="28" font-size="16px" font-weight="900" fill="#58a6ff" text-anchor="middle">3. Nav2 Stack [P50]</text>
+        <text x="112" y="55" font-size="13px" font-family="monospace" fill="#58a6ff" text-anchor="middle">/cmd_vel_nav</text>
+        <text x="112" y="80" font-size="12px" fill="#c9d1d9" text-anchor="middle">Autonomous Velocity</text>
+        <text x="112" y="105" font-size="12px" font-weight="700" fill="#58a6ff" text-anchor="middle">Mission Path Follower</text>
+      </g>
+    </g>
+
+    <!-- Card 3.2: Safety Zone Controller -->
+    <g transform="translate(915, 1122)">
+      <rect width="805" height="220" rx="10" fill="#0d1117" stroke="#ff7b72" stroke-width="1.5"/>
+      <text x="402" y="32" font-size="20px" font-weight="900" fill="#ff7b72" text-anchor="middle">🛡️ safety_zone_controller (Active LiDAR Collision Avoidance)</text>
+      <text x="402" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Dual-Stack Python &amp; C++ • Real-Time Laser Point Projection</text>
+
+      <g transform="translate(35, 75)">
+        <rect width="345" height="125" rx="8" fill="#161b22" stroke="#ff7b72" stroke-width="1.5"/>
+        <text x="172" y="30" font-size="18px" font-weight="900" fill="#ff7b72" text-anchor="middle">🔴 STOP ZONE (r ≤ 0.45m)</text>
+        <text x="172" y="58" font-size="13px" fill="#c9d1d9" text-anchor="middle">Emergency Braking Triggered (/e_stop: true)</text>
+        <text x="172" y="82" font-size="13px" fill="#ff7b72" text-anchor="middle">Locks Velocity Output to Exactly 0.0 m/s</text>
+        <text x="172" y="106" font-size="12px" fill="#8b949e" text-anchor="middle">Visualized via RViz2 Non-Blinking Cylinder</text>
+      </g>
+
+      <g transform="translate(425, 75)">
+        <rect width="345" height="125" rx="8" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+        <text x="172" y="30" font-size="18px" font-weight="900" fill="#d29922" text-anchor="middle">🟡 SLOW ZONE (0.45m &lt; r ≤ 0.90m)</text>
+        <text x="172" y="58" font-size="13px" fill="#c9d1d9" text-anchor="middle">Proportional Speed Throttling (50% Linear Speed)</text>
+        <text x="172" y="82" font-size="13px" fill="#d29922" text-anchor="middle">Smooth Deceleration Before Tight Corners</text>
+        <text x="172" y="106" font-size="12px" fill="#8b949e" text-anchor="middle">Dynamic Service Update via SetSafetyZone.srv</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- CONNECTOR 3 -> 4: /cmd_vel (MULTIPLEXED) (CENTERED AT X = 900)            -->
+  <!-- ========================================================================= -->
+  <g id="conn_3_to_4">
+    <line x1="900" y1="1360" x2="900" y2="1440" stroke="#d29922" stroke-width="3" marker-end="url(#arrow_amber)"/>
+    <rect x="690" y="1380" width="420" height="40" rx="20" fill="#161b22" stroke="#d29922" stroke-width="2"/>
+    <text x="900" y="1405" font-size="14px" font-weight="800" fill="#d29922" text-anchor="middle" font-family="monospace">🔀 /cmd_vel (Multiplexed Velocity)</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 4: LOCALIZATION, SLAM & MULTI-SENSOR STATE ESTIMATION (M3, M4, M6)  -->
+  <!-- ========================================================================= -->
+  <g id="layer_4">
+    <!-- Outer Container Box with Perfect Clip Path -->
+    <rect x="50" y="1440" width="1700" height="330" rx="14" fill="url(#l4_card)" stroke="#238636" stroke-width="2.5"/>
+    <rect x="50" y="1440" width="1700" height="48" fill="url(#l4_header)" clip-path="url(#clip_l4)"/>
+    <text x="900" y="1471" font-size="18px" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1px">LAYER 4: LOCALIZATION, SLAM &amp; MULTI-SENSOR STATE ESTIMATION (M3, M4, M6)</text>
+
+    <!-- Sub-Cards (4 Symmetrical: 395px each with 20px gaps) -->
+    <!-- Card 4.1: SLAM Toolbox -->
+    <g transform="translate(80, 1502)">
+      <rect width="395" height="250" rx="10" fill="#0d1117" stroke="#238636" stroke-width="1.5"/>
+      <text x="197" y="32" font-size="19px" font-weight="900" fill="#3fb950" text-anchor="middle">🗺️ SLAM Toolbox (M3)</text>
+      <text x="197" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">2D LiDAR Mapping (online_async)</text>
+      <rect x="20" y="75" width="355" height="155" rx="8" fill="#161b22"/>
+      <text x="35" y="102" font-size="13px" fill="#c9d1d9">• Ceres Solver Scan Matching</text>
+      <text x="35" y="126" font-size="13px" fill="#c9d1d9">• Dynamic Graph Optimization &amp; Loop Closure</text>
+      <text x="35" y="150" font-size="13px" fill="#c9d1d9">• Real-Time /map Generation (0.05m res)</text>
+      <text x="35" y="174" font-size="13px" fill="#c9d1d9">• Map Serialization (YAML + PGM)</text>
+      <text x="35" y="202" font-size="13px" font-weight="700" fill="#3fb950">TF Broadcast: map ➔ odom</text>
+    </g>
+
+    <!-- Card 4.2: AMCL Localization -->
+    <g transform="translate(495, 1502)">
+      <rect width="395" height="250" rx="10" fill="#0d1117" stroke="#238636" stroke-width="1.5"/>
+      <text x="197" y="32" font-size="19px" font-weight="900" fill="#3fb950" text-anchor="middle">🎯 AMCL Localization (M6)</text>
+      <text x="197" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Adaptive Monte Carlo Particle Filter</text>
+      <rect x="20" y="75" width="355" height="155" rx="8" fill="#161b22"/>
+      <text x="35" y="102" font-size="13px" fill="#c9d1d9">• 500 to 2000 Dynamic Particles</text>
+      <text x="35" y="126" font-size="13px" fill="#c9d1d9">• KLD Sampling Recovery (α_slow, α_fast)</text>
+      <text x="35" y="150" font-size="13px" fill="#c9d1d9">• Likelihood Field Laser Sensor Model</text>
+      <text x="35" y="174" font-size="13px" fill="#c9d1d9">• Odometry Motion Model (diff-drive)</text>
+      <text x="35" y="202" font-size="13px" font-weight="700" fill="#3fb950">Output: /amcl_pose &amp; /particle_cloud</text>
+    </g>
+
+    <!-- Card 4.3: Robot Localization EKF -->
+    <g transform="translate(910, 1502)">
+      <rect width="395" height="250" rx="10" fill="#0d1117" stroke="#238636" stroke-width="1.5"/>
+      <text x="197" y="32" font-size="19px" font-weight="900" fill="#3fb950" text-anchor="middle">📡 Robot Localization EKF (M6)</text>
+      <text x="197" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">15-State Extended Kalman Filter</text>
+      <rect x="20" y="75" width="355" height="155" rx="8" fill="#161b22"/>
+      <text x="35" y="102" font-size="13px" fill="#c9d1d9">• Fuses Wheel Odometry + 6-DOF IMU</text>
+      <text x="35" y="126" font-size="13px" fill="#c9d1d9">• State: [x, y, z, r, p, y, ẋ, ẏ, ż, ṗ, q̇, ṙ, ẍ, ÿ, z̈]</text>
+      <text x="35" y="150" font-size="13px" fill="#c9d1d9">• Continuous Covariance Propagation</text>
+      <text x="35" y="174" font-size="13px" fill="#c9d1d9">• Eliminates Wheel Slip &amp; Skid Drift</text>
+      <text x="35" y="202" font-size="13px" font-weight="700" fill="#3fb950">Output: /odometry/filtered</text>
+    </g>
+
+    <!-- Card 4.4: TF2 Coordinate Hierarchy -->
+    <g transform="translate(1325, 1502)">
+      <rect width="395" height="250" rx="10" fill="#0d1117" stroke="#238636" stroke-width="1.5"/>
+      <text x="197" y="32" font-size="19px" font-weight="900" fill="#3fb950" text-anchor="middle">🌳 Production TF2 Tree</text>
+      <text x="197" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Decoupled Transform Hierarchy</text>
+      <rect x="20" y="75" width="355" height="155" rx="8" fill="#161b22"/>
+      <text x="40" y="104" font-size="14px" font-family="monospace" font-weight="700" fill="#3fb950">map</text>
+      <text x="55" y="128" font-size="13px" font-family="monospace" fill="#58a6ff">↳ odom (AMCL / SLAM: 50 Hz)</text>
+      <text x="75" y="152" font-size="13px" font-family="monospace" fill="#bc8cff">↳ base_footprint (EKF: 50 Hz)</text>
+      <text x="95" y="176" font-size="13px" font-family="monospace" fill="#d29922">↳ base_link (URDF: static)</text>
+      <text x="115" y="200" font-size="13px" font-family="monospace" fill="#ff7b72">↳ lidar_link &amp; imu_link</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- CONNECTOR 4 -> 5: KINEMATICS & TELEMETRY (CENTERED AT X = 900)            -->
+  <!-- ========================================================================= -->
+  <g id="conn_4_to_5">
+    <line x1="900" y1="1770" x2="900" y2="1850" stroke="#3fb950" stroke-width="3" marker-end="url(#arrow_green)"/>
+    <rect x="690" y="1790" width="420" height="40" rx="20" fill="#161b22" stroke="#238636" stroke-width="2"/>
+    <text x="900" y="1815" font-size="14px" font-weight="800" fill="#3fb950" text-anchor="middle" font-family="monospace">🔄 Sensor Telemetry &amp; Transforms</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 5: SIMULATOR PHYSICS & PHYSICAL HARDWARE DEPLOYMENT (M1, M10, M11)  -->
+  <!-- ========================================================================= -->
+  <g id="layer_5">
+    <!-- Outer Container Box with Perfect Clip Path -->
+    <rect x="50" y="1850" width="1700" height="320" rx="14" fill="url(#l5_card)" stroke="#30363d" stroke-width="2.5"/>
+    <rect x="50" y="1850" width="1700" height="48" fill="url(#l5_header)" clip-path="url(#clip_l5)"/>
+    <text x="900" y="1881" font-size="18px" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1px">LAYER 5: SIMULATOR PHYSICS ENGINES &amp; PHYSICAL HARDWARE DEPLOYMENT (M1, M10, M11)</text>
+
+    <!-- 3 Symmetrical Cards (533px each with 20px gaps) -->
+    <!-- Card 5.1: Multi-World Simulation -->
+    <g transform="translate(80, 1912)">
+      <rect width="533" height="238" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+      <text x="266" y="32" font-size="19px" font-weight="900" fill="#58a6ff" text-anchor="middle">🌐 Multi-World Simulators (M1 &amp; M10)</text>
+      <text x="266" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Classic Gazebo 11 • Ignition Fortress • Modern Gz</text>
+      <rect x="20" y="75" width="493" height="145" rx="8" fill="#161b22"/>
+      <text x="40" y="104" font-size="13px" font-weight="700" fill="#58a6ff">1. nav_challenge.world (0.40m Narrow Corridors)</text>
+      <text x="40" y="128" font-size="13px" font-weight="700" fill="#3fb950">2. maze_world.world (12-Corner Complex Labyrinth)</text>
+      <text x="40" y="152" font-size="13px" font-weight="700" fill="#d29922">3. obstacle_world.world (Dense Dynamic Obstacles)</text>
+      <text x="40" y="180" font-size="12px" fill="#8b949e">ODE / Bullet Physics Simulation • LaserScan (10 Hz) • IMU (50 Hz)</text>
+      <text x="40" y="202" font-size="12px" font-family="monospace" fill="#58a6ff">ros2 launch mobile_robot_bringup autonomous_navigation.launch.py</text>
+    </g>
+
+    <!-- Card 5.2: Kinematics & Controllers -->
+    <g transform="translate(633, 1912)">
+      <rect width="533" height="238" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+      <text x="266" y="32" font-size="19px" font-weight="900" fill="#bc8cff" text-anchor="middle">⚙️ Differential Drive Kinematics &amp; ros2_control</text>
+      <text x="266" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Dual C++ (rclcpp) &amp; Python (rclpy) Kinematics Engines</text>
+      <rect x="20" y="75" width="493" height="145" rx="8" fill="#161b22"/>
+      <text x="40" y="104" font-size="13px" font-weight="700" fill="#bc8cff">Forward &amp; Inverse Kinematic Velocity Conversions</text>
+      <text x="40" y="128" font-size="13px" fill="#c9d1d9">v_L = (v - ω·L/2)/r  •  v_R = (v + ω·L/2)/r</text>
+      <text x="40" y="152" font-size="13px" fill="#c9d1d9">Runge-Kutta 2nd Order Odometry Integration (50 Hz)</text>
+      <text x="40" y="180" font-size="12px" fill="#8b949e">ros2_control diff_drive_controller Hardware Interface</text>
+      <text x="40" y="202" font-size="12px" font-family="monospace" fill="#bc8cff">/joint_states • /wheel/odometry</text>
+    </g>
+
+    <!-- Card 5.3: Real Hardware Edge Pi -->
+    <g transform="translate(1186, 1912)">
+      <rect width="534" height="238" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+      <text x="267" y="32" font-size="19px" font-weight="900" fill="#ff7b72" text-anchor="middle">🍓 Real Robot Hardware Deployment (M11)</text>
+      <text x="267" y="58" font-size="13px" font-weight="700" fill="#8b949e" text-anchor="middle">Raspberry Pi 4 / 5 Edge Compute + Microcontrollers</text>
+      <rect x="20" y="75" width="494" height="145" rx="8" fill="#161b22"/>
+      <text x="40" y="104" font-size="13px" font-weight="700" fill="#ff7b72">RPLiDAR A1 / A2 / A3 Laser Scanner (UART)</text>
+      <text x="40" y="128" font-size="13px" fill="#c9d1d9">360° 12m Scanning Range • 8000 Points/sec (10 Hz)</text>
+      <text x="40" y="152" font-size="13px" font-weight="700" fill="#d29922">serial_hardware_bridge.py (Auto-Baud 115200)</text>
+      <text x="40" y="180" font-size="12px" fill="#8b949e">Arduino Uno / ESP32 Microcontroller Firmware</text>
+      <text x="40" y="202" font-size="12px" font-family="monospace" fill="#ff7b72">ros2 launch mobile_robot_bringup real_robot.launch.py</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER BANNER                                                             -->
+  <!-- ========================================================================= -->
+  <g transform="translate(50, 2210)">
+    <rect width="1700" height="160" rx="12" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+    <text x="850" y="42" font-size="20px" font-weight="900" fill="#58a6ff" text-anchor="middle">AUTHOR &amp; MAINTAINER: RAHUL RAMASAMY</text>
+    <text x="850" y="70" font-size="14px" font-weight="700" fill="#8b949e" text-anchor="middle">GitHub: rahul-r-joshua • LinkedIn: rahul-ramasamy-in • Email: rahul.r.joshua123@gmail.com</text>
+    <text x="850" y="98" font-size="14px" fill="#c9d1d9" text-anchor="middle">Production-Grade Mobile Robotics Workshop Curriculum • 62-Tier Automated Verification Suite (100% Passed)</text>
+
+    <g transform="translate(250, 115)">
+      <rect width="260" height="30" rx="15" fill="#1f6feb" opacity="0.2"/>
+      <rect width="260" height="30" rx="15" fill="none" stroke="#58a6ff" stroke-width="1"/>
+      <text x="130" y="20" font-size="13px" font-weight="800" fill="#58a6ff" text-anchor="middle">✓ 11 Packages Built</text>
+    </g>
+    <g transform="translate(550, 115)">
+      <rect width="260" height="30" rx="15" fill="#8957e5" opacity="0.2"/>
+      <rect width="260" height="30" rx="15" fill="none" stroke="#bc8cff" stroke-width="1"/>
+      <text x="130" y="20" font-size="13px" font-weight="800" fill="#bc8cff" text-anchor="middle">✓ C++ Planners &amp; Controllers</text>
+    </g>
+    <g transform="translate(850, 115)">
+      <rect width="260" height="30" rx="15" fill="#238636" opacity="0.2"/>
+      <rect width="260" height="30" rx="15" fill="none" stroke="#3fb950" stroke-width="1"/>
+      <text x="130" y="20" font-size="13px" font-weight="800" fill="#3fb950" text-anchor="middle">✓ AMCL + 15-State EKF</text>
+    </g>
+    <g transform="translate(1150, 115)">
+      <rect width="260" height="30" rx="15" fill="#d29922" opacity="0.2"/>
+      <rect width="260" height="30" rx="15" fill="none" stroke="#d29922" stroke-width="1"/>
+      <text x="130" y="20" font-size="13px" font-weight="800" fill="#d29922" text-anchor="middle">✓ 3 Worlds &amp; Simulators</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,7 @@
+# Request: Dynamic safety thresholds (in meters)
+float32 red_zone_threshold
+float32 yellow_zone_threshold
+---
+# Response: Confirmation status and message
+bool success
+string message

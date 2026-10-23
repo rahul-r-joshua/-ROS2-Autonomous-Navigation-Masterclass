@@ -1,0 +1,373 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="four_wheel_robot">
+
+  <!-- ==================================================================== -->
+  <!-- 1. Robot Parameters and Dimensions                                   -->
+  <!-- ==================================================================== -->
+  <xacro:property name="chassis_length" value="0.40"/>
+  <xacro:property name="chassis_width"  value="0.30"/>
+  <xacro:property name="chassis_height" value="0.10"/>
+  <xacro:property name="chassis_mass"   value="4.0"/>
+
+  <xacro:property name="wheel_radius"   value="0.05"/>
+  <xacro:property name="wheel_width"    value="0.04"/>
+  <xacro:property name="wheel_mass"     value="0.4"/>
+
+  <!-- Wheel Offsets -->
+  <xacro:property name="wheel_x_offset" value="0.12"/>
+  <xacro:property name="wheel_y_offset" value="0.17"/>
+  <xacro:property name="wheel_z_offset" value="0.0"/>
+
+  <!-- PI Constant -->
+  <xacro:property name="PI" value="3.14159265359"/>
+
+  <!-- ==================================================================== -->
+  <!-- 2. Inertial Calculation Macros (For Gazebo Physics and Simulation)   -->
+  <!-- ==================================================================== -->
+  <xacro:macro name="box_inertia" params="m l w h">
+    <inertial>
+      <mass value="${m}"/>
+      <inertia ixx="${(m/12.0) * (w*w + h*h)}" ixy="0.0" ixz="0.0"
+               iyy="${(m/12.0) * (l*l + h*h)}" iyz="0.0"
+               izz="${(m/12.0) * (l*l + w*w)}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="cylinder_inertia" params="m r h">
+    <inertial>
+      <mass value="${m}"/>
+      <inertia ixx="${(m/12.0) * (3*r*r + h*h)}" ixy="0.0" ixz="0.0"
+               iyy="${(m/12.0) * (3*r*r + h*h)}" iyz="0.0"
+               izz="${(m/2.0) * (r*r)}"/>
+    </inertial>
+  </xacro:macro>
+
+  <!-- ==================================================================== -->
+  <!-- 3. Materials / Colors (High-Detail Photorealistic Aesthetics)        -->
+  <!-- ==================================================================== -->
+  <!-- Chassis Materials -->
+  <material name="chassis_metal_blue">
+    <color rgba="0.10 0.28 0.58 1.0"/> <!-- Metallic Sapphire Blue -->
+  </material>
+
+  <material name="carbon_top_deck">
+    <color rgba="0.18 0.20 0.24 1.0"/> <!-- Carbon Fiber / Dark Titanium -->
+  </material>
+
+  <material name="bumper_matte_black">
+    <color rgba="0.08 0.08 0.08 1.0"/> <!-- Tough Bumper Black -->
+  </material>
+
+  <!-- Wheel Materials -->
+  <material name="tire_rubber_black">
+    <color rgba="0.12 0.12 0.12 1.0"/> <!-- Matte Rubber Tire -->
+  </material>
+
+  <material name="wheel_alloy_silver">
+    <color rgba="0.82 0.84 0.88 1.0"/> <!-- Brushed Aluminum Rim -->
+  </material>
+
+  <material name="wheel_hub_gold">
+    <color rgba="0.85 0.65 0.15 1.0"/> <!-- Center Hub Nut Accent -->
+  </material>
+
+  <!-- LiDAR Sensor Materials -->
+  <material name="lidar_color">
+    <color rgba="0.85 0.15 0.15 1.0"/> <!-- Red -->
+  </material>
+
+  <material name="lidar_base_black">
+    <color rgba="0.12 0.12 0.14 1.0"/> <!-- Anodized Black Base -->
+  </material>
+
+  <material name="lidar_optical_crimson">
+    <color rgba="0.88 0.10 0.18 0.95"/> <!-- Optical Red Laser Turret -->
+  </material>
+
+  <material name="lidar_top_cap">
+    <color rgba="0.05 0.05 0.05 1.0"/> <!-- Glossy Protective Cap -->
+  </material>
+
+  <!-- Camera Sensor Materials -->
+  <material name="camera_casing_grey">
+    <color rgba="0.16 0.18 0.22 1.0"/> <!-- Anodized Aluminum Casing -->
+  </material>
+
+  <material name="camera_lens_cyan">
+    <color rgba="0.10 0.70 0.90 1.0"/> <!-- Optical Glass Lens -->
+  </material>
+
+  <material name="status_led_green">
+    <color rgba="0.20 0.95 0.30 1.0"/> <!-- Power LED Indicator -->
+  </material>
+
+  <!-- IMU Sensor Materials -->
+  <material name="imu_pcb_emerald">
+    <color rgba="0.06 0.52 0.24 1.0"/> <!-- Classic Circuit Board Green -->
+  </material>
+
+  <material name="imu_chip_black">
+    <color rgba="0.15 0.15 0.15 1.0"/> <!-- MEMS IC Microchip -->
+  </material>
+
+  <material name="imu_pin_gold">
+    <color rgba="0.90 0.75 0.20 1.0"/> <!-- Gold-Plated Header Pins -->
+  </material>
+
+  <!-- ==================================================================== -->
+  <!-- 4. Base Footprint (Ground Projection Link)                           -->
+  <!-- ==================================================================== -->
+  <link name="base_footprint"/>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 ${wheel_radius}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ==================================================================== -->
+  <!-- 5. Base Link / Chassis (Multi-Deck Robot Architecture)               -->
+  <!-- ==================================================================== -->
+  <link name="base_link">
+    <!-- 5A. Main Monocoque Chassis -->
+    <visual>
+      <origin xyz="0.0 0.0 0.025" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} 0.09"/>
+      </geometry>
+      <material name="chassis_metal_blue"/>
+    </visual>
+
+    <!-- 5B. Top Equipment Deck Plate -->
+    <visual>
+      <origin xyz="0.0 0.0 0.075" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassis_length - 0.02} ${chassis_width - 0.02} 0.01"/>
+      </geometry>
+      <material name="carbon_top_deck"/>
+    </visual>
+
+    <!-- 5C. Front Skid Bumper -->
+    <visual>
+      <origin xyz="${chassis_length/2 - 0.005} 0.0 0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.015 ${chassis_width} 0.05"/>
+      </geometry>
+      <material name="bumper_matte_black"/>
+    </visual>
+
+    <!-- Collision Geometry (Single Unified Bounding Box) -->
+    <collision>
+      <origin xyz="0.0 0.0 0.03" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="${chassis_mass}" l="${chassis_length}" w="${chassis_width}" h="${chassis_height}"/>
+  </link>
+
+  <!-- ==================================================================== -->
+  <!-- 6. Wheel Macro (Sports Rim Alloy + Rubber Tire)                      -->
+  <!-- ==================================================================== -->
+  <xacro:macro name="wheel" params="prefix x_reflect y_reflect">
+    <link name="${prefix}_wheel_link">
+      <!-- 6A. Outer Rubber Tire -->
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+        <material name="tire_rubber_black"/>
+      </visual>
+
+      <!-- 6B. Brushed Aluminum Alloy Rim -->
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius * 0.70}" length="${wheel_width + 0.002}"/>
+        </geometry>
+        <material name="wheel_alloy_silver"/>
+      </visual>
+
+      <!-- 6C. Center Hubcap Accent -->
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius * 0.25}" length="${wheel_width + 0.004}"/>
+        </geometry>
+        <material name="wheel_hub_gold"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+    </link>
+
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${prefix}_wheel_link"/>
+      <origin xyz="${x_reflect * wheel_x_offset} ${y_reflect * wheel_y_offset} ${wheel_z_offset}" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Instantiate the 4 Wheels -->
+  <!-- Front Left -->
+  <xacro:wheel prefix="front_left"  x_reflect="1"  y_reflect="1"/>
+  <!-- Front Right -->
+  <xacro:wheel prefix="front_right" x_reflect="1"  y_reflect="-1"/>
+  <!-- Rear Left -->
+  <xacro:wheel prefix="rear_left"   x_reflect="-1" y_reflect="1"/>
+  <!-- Rear Right -->
+  <xacro:wheel prefix="rear_right"  x_reflect="-1" y_reflect="-1"/>
+
+  <!-- ==================================================================== -->
+  <!-- 7. Sensors (Realistic RPLiDAR Puck, Vision Camera & IMU PCB)         -->
+  <!-- ==================================================================== -->
+  
+  <!-- 7A. 2D LiDAR Sensor (Mounted flush on top surface of chassis - Z = 0.08 + 0.02 = 0.10m) -->
+  <link name="lidar_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.04"/>
+      </geometry>
+      <material name="lidar_color"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.04"/>
+      </geometry>
+    </collision>
+    <xacro:cylinder_inertia m="0.15" r="0.04" h="0.04"/>
+  </link>
+
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0.10 0.0 0.10" rpy="0 0 0"/>
+  </joint>
+
+  <!-- 7B. Front Camera (RealSense-Style Dual Optical Sensor) -->
+  <link name="camera_link">
+    <!-- Camera Body Casing -->
+    <visual>
+      <origin xyz="0.01 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.07 0.024"/>
+      </geometry>
+      <material name="camera_casing_grey"/>
+    </visual>
+
+    <!-- Optical Glass Lens (Center) -->
+    <visual>
+      <origin xyz="0.021 0.0 0" rpy="0 ${PI/2} 0"/>
+      <geometry>
+        <cylinder radius="0.007" length="0.003"/>
+      </geometry>
+      <material name="camera_lens_cyan"/>
+    </visual>
+
+    <!-- IR / Secondary Lens -->
+    <visual>
+      <origin xyz="0.021 0.022 0" rpy="0 ${PI/2} 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.003"/>
+      </geometry>
+      <material name="lidar_optical_crimson"/>
+    </visual>
+
+    <!-- Power Indicator LED -->
+    <visual>
+      <origin xyz="0.021 -0.025 0.005" rpy="0 ${PI/2} 0"/>
+      <geometry>
+        <cylinder radius="0.002" length="0.002"/>
+      </geometry>
+      <material name="status_led_green"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0.01 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.07 0.024"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="0.05" l="0.02" w="0.07" h="0.024"/>
+  </link>
+
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+    <origin xyz="0.20 0.0 0.05" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Standard ROS Camera Optical Frame (Z forward, X right, Y down) -->
+  <link name="camera_optical_link"/>
+
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_optical_link"/>
+    <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}"/>
+  </joint>
+
+  <!-- 7C. IMU Sensor Link (MPU6050 / BNO055 Breakout Board) -->
+  <link name="imu_link">
+    <!-- PCB Substrate -->
+    <visual>
+      <origin xyz="0 0 0.001" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.022 0.022 0.002"/>
+      </geometry>
+      <material name="imu_pcb_emerald"/>
+    </visual>
+
+    <!-- Microcontroller / MEMS IC Chip -->
+    <visual>
+      <origin xyz="0 0 0.003" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.008 0.008 0.002"/>
+      </geometry>
+      <material name="imu_chip_black"/>
+    </visual>
+
+    <!-- Gold Pin Headers -->
+    <visual>
+      <origin xyz="-0.008 0 0.003" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.003 0.018 0.002"/>
+      </geometry>
+      <material name="imu_pin_gold"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.001" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.022 0.022 0.002"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="0.01" l="0.022" w="0.022" h="0.002"/>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0.0 0.0 0.08" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ==================================================================== -->
+  <!-- 8. Gazebo Simulation Tags and Plugins                                -->
+  <!-- ==================================================================== -->
+  <xacro:include filename="mobile_robot_gazebo.xacro"/>
+
+  <!-- ==================================================================== -->
+  <!-- 9. ros2_control and Transmissions                                    -->
+  <!-- ==================================================================== -->
+  <xacro:include filename="ros2_control.xacro"/>
+  <xacro:include filename="transmission.xacro"/>
+
+</robot>

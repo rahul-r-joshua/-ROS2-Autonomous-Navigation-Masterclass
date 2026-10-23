@@ -1,0 +1,11 @@
+# Goal: Target waypoint pose and requested drive speed
+geometry_msgs/PoseStamped target_pose
+float32 desired_linear_speed
+---
+# Result: Final completion status and total distance traversed
+bool success
+float32 total_distance_traveled
+---
+# Feedback: Real-time remaining distance and current vehicle speed
+float32 distance_remaining
+float32 current_linear_speed

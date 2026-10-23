@@ -1,0 +1,9 @@
+/**:
+  ros__parameters:
+    wheel_radius: 0.05         # Wheel radius in meters (5 cm)
+    wheel_separation: 0.457    # Calibrated effective wheel track for 4WD skid-steer wheel scrub (0.457 m)
+    publish_rate: 50.0         # Controller update frequency in Hz (synced to 50 Hz Gazebo physics)
+    cmd_vel_timeout: 0.5       # Auto-stop watchdog timeout in seconds
+    odom_frame_id: "odom"      # Odometry parent frame
+    base_frame_id: "base_footprint" # Robot base footprint frame
+    publish_joint_states: false # Handled cleanly by joint_state_broadcaster from physics simulation

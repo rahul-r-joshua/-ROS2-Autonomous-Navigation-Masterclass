@@ -1,0 +1,11 @@
+twist_mux:
+  ros__parameters:
+    locks:
+      e_stop:
+        topic   : e_stop
+        timeout : 0.0
+        priority: 255
+      safety_stop:
+        topic   : safety_stop
+        timeout : 0.0
+        priority: 200

@@ -1,0 +1,19 @@
+/**:
+  ros__parameters:
+    axis_linear:
+      x: 1                # Left stick vertical (forward / backward)
+    scale_linear:
+      x: 0.3              # Reduced normal speed: 0.3 m/s (safe & smooth indoors)
+    scale_linear_turbo:
+      x: 0.6              # Reduced turbo speed: 0.6 m/s
+
+    axis_angular:
+      yaw: 3              # Right stick horizontal (turning / steering)
+    scale_angular:
+      yaw: 0.4            # Very smooth normal turning rate: 0.4 rad/s
+    scale_angular_turbo:
+      yaw: 0.8            # Controlled turbo turning rate: 0.8 rad/s
+
+    enable_button: 4        # Deadman switch: LB (Button 4) - Must hold to drive
+    enable_turbo_button: 5  # Turbo switch: RB (Button 5) - Hold for turbo speed
+    require_enable_button: true

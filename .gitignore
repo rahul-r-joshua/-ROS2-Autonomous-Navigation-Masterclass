@@ -1,0 +1,27 @@
+# ROS 2 Build Artifacts
+build/
+install/
+log/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# C++ Build & IDE
+*.o
+*.obj
+*.d
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+compile_commands.json
+
+# ROS 2 Generated Logs
+COLCON_IGNORE

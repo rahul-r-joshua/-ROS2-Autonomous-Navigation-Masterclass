@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================================================================== -->
+  <!-- Transmissions & Actuators for 4-Wheel Differential Drive Robot       -->
+  <!-- ==================================================================== -->
+  <xacro:macro name="wheel_transmission" params="prefix">
+    <transmission name="${prefix}_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}_wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}_wheel_motor">
+        <mechanicalReduction>1.0</mechanicalReduction>
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+  <xacro:wheel_transmission prefix="front_left"/>
+  <xacro:wheel_transmission prefix="front_right"/>
+  <xacro:wheel_transmission prefix="rear_left"/>
+  <xacro:wheel_transmission prefix="rear_right"/>
+
+</robot>

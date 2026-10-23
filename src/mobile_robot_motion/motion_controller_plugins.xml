@@ -1,0 +1,15 @@
+<class_libraries>
+	<library path="pd_motion">
+		<class type="mobile_robot_motion::PDMotion" base_class_type="nav2_core::Controller">
+		  <description>PD Motion Controller.</description>
+		</class>
+		<class type="mobile_robot_motion::PDMotionPlanner" base_class_type="nav2_core::Controller">
+		  <description>PD Motion Controller alias.</description>
+		</class>
+	</library>
+	<library path="pure_pursuit">
+		<class type="mobile_robot_motion::PurePursuit" base_class_type="nav2_core::Controller">
+		  <description>Pure Pursuit Motion Controller.</description>
+		</class>
+	</library>
+</class_libraries>
