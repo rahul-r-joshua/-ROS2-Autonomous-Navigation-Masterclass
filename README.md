@@ -2,6 +2,10 @@
 
 > A complete, production-grade ROS 2 Humble curriculum and 4-wheel autonomous mobile robot (AMR) navigation capstone system, engineered side-by-side in both Python (`rclpy`) and Modern C++ (`rclcpp`). Features full Nav2 integration, custom C++ pluginlib Global Planners (A\* & Dijkstra), custom C++ Local Controllers (Pure Pursuit & PD Motion), multi-sensor EKF fusion (Wheel Odometry, 6-DOF IMU, 2D LiDAR), AMCL probabilistic localization, 3 Gazebo simulation environments (`nav_challenge`, `maze_world`, `obstacle_world`), active LiDAR safety zones, velocity multiplexing (`twist_mux`), programmatic autonomous missions, and physical Raspberry Pi hardware deployment.
 
+<div align="center">
+  <img src="./assets/simulation_demo.svg" alt="ROS 2 Autonomous Navigation & Active LiDAR Safety Zones Visualizer" width="100%"/>
+</div>
+
 ---
 
 ### ⚡ 60-Second Quickstart
@@ -130,7 +134,7 @@ ros2_autonomous_navigation_ws/
 
 ### 1️⃣ Clone Workspace:
 ```bash
-git clone https://github.com/rahul-r-joshua/ROS2-Mobile-Robot-Masterclass.git ~/ros2_autonomous_navigation_ws
+git clone https://github.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass.git ~/ros2_autonomous_navigation_ws
 cd ~/ros2_autonomous_navigation_ws
 ```
 
@@ -959,6 +963,3 @@ For any bugs, feature requests, or questions regarding ROS 2 Autonomous Navigati
 <div align="center">
   <sub>Engineered for the ROS 2 Autonomous Robotics Community.</sub>
 </div>
-# -ROS2-Autonomous-Navigation-Masterclass
-# -ROS2-Autonomous-Navigation-Masterclass
-# -ROS2-Autonomous-Navigation-Masterclass
