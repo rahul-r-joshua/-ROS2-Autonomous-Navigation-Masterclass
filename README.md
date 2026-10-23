@@ -80,13 +80,6 @@ This repository provides an industrial-grade, end-to-end autonomous navigation c
   <img src="./assets/system_architecture.svg" alt="4-Wheel Autonomous Mobile Robot (AMR) Navigation Architecture" width="100%">
 </p>
 
----
-
-## <a id="simulation-visualizer" name="simulation-visualizer"></a>🧭 Autonomous Navigation & Active Safety Visualizer
-
-<p align="center">
-  <img src="./assets/simulation_demo.svg" alt="ROS 2 Autonomous Navigation & Active LiDAR Safety Zones Visualizer" width="100%">
-</p>
 
 ---
 
